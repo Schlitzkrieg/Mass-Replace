@@ -5,8 +5,31 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Mass_Replace"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
+        Title="Mass Replace" Height="758" Width="828">
+    <Grid Margin="0,0,0,-4">
+        <Menu HorizontalAlignment="Left" Height="23" VerticalAlignment="Top" Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=ActualWidth}"/>
+
+        <Grid Margin="0,23,371,4">
+            <DataGrid Name="FindReplaceGrid" HorizontalAlignment="Left" Height="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=ActualHeight}" VerticalAlignment="Top" Width="146"
+                  CanUserAddRows="True" Margin="0,26,0,0" >
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Find" Width="SizeToCells" MinWidth="60" MaxWidth="500" />
+                    <DataGridTextColumn Header="Replace" Width="SizeToCells" MinWidth="80" MaxWidth="500"/>
+                </DataGrid.Columns>
+                <DataGrid.CellStyle>
+                    <Style TargetType="DataGridCell">
+                        <EventSetter Event="MouseUp" Handler="DataGridCell_MouseUp"/>
+                    </Style>
+                </DataGrid.CellStyle>
+            </DataGrid>
+            <Button x:Name="SwapButton" Content="SWAP" HorizontalAlignment="Left" VerticalAlignment="Top" Width="146" Height="26" Background="#FF0BFF90" Click="SwapButton_Click"/>
+            <Button Content="REPLACE" HorizontalAlignment="Left" Margin="0,684,0,0" VerticalAlignment="Top" Width="146"/>
+        </Grid>
+        <Grid Margin="146,0,0,0" >
+            <TextBox x:Name="MainTextArea" HorizontalAlignment="Left" Margin="0,21,0,0" VerticalAlignment="Top" Height="706" Width="674"
+                     Background="{DynamicResource {x:Static SystemColors.InactiveCaptionTextBrushKey}}" Foreground="#FF8BFF00" IsEnabled="True"
+                     TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True"/>
+        </Grid>
+
     </Grid>
 </Window>
