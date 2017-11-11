@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Linq;
 using System.Text;
@@ -21,29 +22,58 @@ namespace Mass_Replace
     /// </summary>
     public partial class MainWindow : Window
     {
-        DataTable mainTable;
+   
+        List<RowModel> rowListing = new List<RowModel>();
+
 
         public MainWindow()
         {
             InitializeComponent();
-            mainTable = new DataTable();
-            mainTable.Columns.Add("Find", typeof(string));
-            mainTable.Columns.Add("Replace", typeof(string));
-            FindReplaceGrid.ItemsSource = mainTable.AsDataView();
+            rowListing.Add(new RowModel() { FindString = string.Empty, ReplaceString = string.Empty });
+            FindReplaceGrid.ItemsSource = rowListing;
         }
 
         private void DataGridCell_MouseUp(object sender, MouseButtonEventArgs e)
         {
             int cellIndex = FindReplaceGrid.SelectedIndex;
-            if (cellIndex == mainTable.Rows.Count)
+            if (cellIndex == FindReplaceGrid.Items.Count)
             {
-                mainTable.Rows.Add();
+                rowListing.Add(new RowModel() { FindString = string.Empty, ReplaceString = string.Empty });
             }
         }
 
+
         private void SwapButton_Click(object sender, RoutedEventArgs e)
         {
+            foreach(RowModel m in rowListing)
+            {
+                string newFind = m.ReplaceString;
+                string newReplace = m.FindString;
+                m.ReplaceString = newReplace;
+                m.FindString = newFind;
+            }
+            FindReplaceGrid.Items.Refresh();
+        }
 
+        private void ReplaceButton_Click(object sender, RoutedEventArgs e)
+        {
+            string mainText = MainTextArea.Text;
+            if (CaseCheckBox.IsChecked.Value == false)
+                mainText = mainText.ToUpper();
+
+
+            foreach(RowModel m in rowListing)
+            {
+                if (CaseCheckBox.IsChecked.Value == false)
+                {
+                    m.FindString = m.FindString.ToUpper();
+                    m.ReplaceString = m.ReplaceString.ToUpper();
+
+                }
+                mainText = mainText.Replace(m.FindString, m.ReplaceString);
+                MainTextArea.Text = mainText;
+            }
+            
         }
     }
 }
