@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
@@ -42,7 +42,6 @@ namespace Mass_Replace
             }
         }
 
-
         private void SwapButton_Click(object sender, RoutedEventArgs e)
         {
             foreach(RowModel m in rowListing)
@@ -58,22 +57,26 @@ namespace Mass_Replace
         private void ReplaceButton_Click(object sender, RoutedEventArgs e)
         {
             string mainText = MainTextArea.Text;
+            if(mainText.Length == 0)
+            {
+                MessageBox.Show("No text to replace");
+                return;
+            }
+
             if (CaseCheckBox.IsChecked.Value == false)
                 mainText = mainText.ToUpper();
-
-
+            
             foreach(RowModel m in rowListing)
             {
                 if (CaseCheckBox.IsChecked.Value == false)
                 {
                     m.FindString = m.FindString.ToUpper();
                     m.ReplaceString = m.ReplaceString.ToUpper();
-
                 }
+
                 mainText = mainText.Replace(m.FindString, m.ReplaceString);
                 MainTextArea.Text = mainText;
             }
-            
         }
     }
 }
