@@ -1,34 +1,46 @@
-﻿<Window x:Class="Mass_Replace.MainWindow"
+<Window x:Class="Mass_Replace.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Mass_Replace"
         mc:Ignorable="d"
-        Title="Mass Replace" Height="758" Width="828">
+        Title="Mass Replace" Height="758" Width="828" Background="#FF919191"
+        MinWidth="828">
     <Grid Margin="0,0,0,-4">
-        <Menu HorizontalAlignment="Left" Height="23" VerticalAlignment="Top" Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=ActualWidth}"/>
+        <Menu Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type Grid}}, Path=ActualWidth}" Background="#FF666666" Height="23" VerticalAlignment="Top">
+            <MenuItem Header="File" Height="23" Width="39" Background="#FF919191" BorderBrush="{DynamicResource {x:Static SystemColors.InactiveCaptionTextBrushKey}}"/>
+        </Menu>
+        <Grid Margin="0,23,655,4" Background="#FF919191">
+            <Grid Margin="0,23,0,45" HorizontalAlignment="Left" Width="165">
 
-        <Grid Margin="0,23,655,4">
-            <DataGrid Name="FindReplaceGrid" HorizontalAlignment="Left" Height="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=ActualHeight}" VerticalAlignment="Top" Width="157"
-                  CanUserAddRows="True" Margin="0,41,0,0" SelectionUnit="Cell" Background="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"
-                      ItemsSource="{Binding}" IsReadOnly="False">
+
+            </Grid>
+            <Grid Margin="0,10,-23,10" HorizontalAlignment="Left" Width="188" Background="#FF919191">
+                <Button x:Name="SwapButton" Content="SWAP" HorizontalAlignment="Left" VerticalAlignment="Top" Width="145" Height="26" Background="#FF0BFF90" Click="SwapButton_Click" Margin="10,0,0,0"/>
+
+                <DataGrid Name="FindReplaceGrid" HorizontalAlignment="Left" Height="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=ActualHeight}" Width="178"
+                      CanUserAddRows="True" Margin="0,31,0,67" SelectionUnit="Cell" Background="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"
+                          ItemsSource="{Binding}" IsReadOnly="False" VerticalScrollBarVisibility="Visible">
 
 
-                <DataGrid.CellStyle>
-                    <Style TargetType="DataGridCell">
-                        <EventSetter Event="MouseUp" Handler="DataGridCell_MouseUp"/>
-                    </Style>
-                </DataGrid.CellStyle>
-            </DataGrid>
-            <Button x:Name="SwapButton" Content="SWAP" HorizontalAlignment="Left" VerticalAlignment="Top" Width="165" Height="26" Background="#FF0BFF90" Click="SwapButton_Click"/>
-            <Button x:Name="ReplaceButton" Content="REPLACE" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="148" Click="ReplaceButton_Click" Background="#FFFF7171"/>
-            <CheckBox x:Name="CaseCheckBox" Content="Case sensitive swap?" HorizontalAlignment="Left" Margin="0,26,0,0" VerticalAlignment="Top" Width="165"/>
+                    <DataGrid.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <EventSetter Event="MouseUp" Handler="DataGridCell_MouseUp"/>
+                        </Style>
+                    </DataGrid.CellStyle>
+                </DataGrid>
+
+
+                <Button x:Name="ReplaceButton" Content="REPLACE" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="145" Click="ReplaceButton_Click" Background="#FFFF7171" Margin="10,0,0,4" Height="25"/>
+                <CheckBox x:Name="CaseCheckBox" Content="Case sensitive replace?"  VerticalAlignment="Bottom" Margin="10,0,10,34" />
+            </Grid>
         </Grid>
-        <Grid Margin="146,0,0,0" >
-            <TextBox x:Name="MainTextArea" HorizontalAlignment="Left" Margin="2,0,0,10" VerticalAlignment="Bottom" Height="698" Width="672"
+
+        <Grid Margin="187,23,0,4" Background="#FF919191">
+            <TextBox x:Name="MainTextArea"
                      Background="{DynamicResource {x:Static SystemColors.InactiveCaptionTextBrushKey}}" Foreground="#FF8BFF00" IsEnabled="True"
-                     TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto"/>
+                     TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" Margin="0,10,0,0" />
         </Grid>
 
     </Grid>
