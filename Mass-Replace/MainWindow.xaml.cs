@@ -1,19 +1,7 @@
-using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Mass_Replace
 {
@@ -22,9 +10,7 @@ namespace Mass_Replace
     /// </summary>
     public partial class MainWindow : Window
     {
-   
         List<RowModel> rowListing = new List<RowModel>();
-
 
         public MainWindow()
         {
@@ -62,21 +48,24 @@ namespace Mass_Replace
                 MessageBox.Show("No text to replace");
                 return;
             }
-
-            if (CaseCheckBox.IsChecked.Value == false)
-                mainText = mainText.ToUpper();
             
             foreach(RowModel m in rowListing)
             {
                 if (CaseCheckBox.IsChecked.Value == false)
                 {
-                    m.FindString = m.FindString.ToUpper();
-                    m.ReplaceString = m.ReplaceString.ToUpper();
+                    mainText = Regex.Replace(mainText, m.FindString, m.ReplaceString, RegexOptions.IgnoreCase);
                 }
-
-                mainText = mainText.Replace(m.FindString, m.ReplaceString);
+                else
+                {
+                    mainText = mainText.Replace(m.FindString, m.ReplaceString);
+                }
                 MainTextArea.Text = mainText;
             }
+        }
+
+        private void ExitButton_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Application.Current.Shutdown();
         }
     }
 }
