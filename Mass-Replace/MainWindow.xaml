@@ -9,7 +9,9 @@
         MinWidth="828">
     <Grid Margin="0,0,0,-4">
         <Menu Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type Grid}}, Path=ActualWidth}" Background="#FF666666" Height="23" VerticalAlignment="Top">
-            <MenuItem Header="File" Height="23" Width="39" Background="#FF919191" BorderBrush="{DynamicResource {x:Static SystemColors.InactiveCaptionTextBrushKey}}"/>
+            <MenuItem Header="File" Height="23" Width="39" Background="#FF919191" BorderBrush="{DynamicResource {x:Static SystemColors.InactiveCaptionTextBrushKey}}">
+                <MenuItem Header="Exit" HorizontalAlignment="Left" Height="28" Width="104" Click="ExitButton_Click"/>
+            </MenuItem>
         </Menu>
         <Grid Margin="0,23,655,4" Background="#FF919191">
             <Grid Margin="0,23,0,45" HorizontalAlignment="Left" Width="165">
