@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
@@ -10,12 +11,20 @@ namespace Mass_Replace
     /// </summary>
     public partial class MainWindow : Window
     {
+        static string stateFile = Directory.GetCurrentDirectory().ToString() + @"\config.csv";
         List<RowModel> rowListing = new List<RowModel>();
 
         public MainWindow()
         {
             InitializeComponent();
-            rowListing.Add(new RowModel() { FindString = string.Empty, ReplaceString = string.Empty });
+            if (File.Exists(stateFile))
+            {
+                LoadState();
+            }
+            else
+            {
+                rowListing.Add(new RowModel() { FindString = string.Empty, ReplaceString = string.Empty });
+            }
             FindReplaceGrid.ItemsSource = rowListing;
         }
 
@@ -65,7 +74,48 @@ namespace Mass_Replace
 
         private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
+            SaveState();
             System.Windows.Application.Current.Shutdown();
+        }
+
+        private void SaveState()
+        {
+            //if the file exists, clear it out
+            if (File.Exists(stateFile))
+            {
+                File.WriteAllText(stateFile, string.Empty);
+            }
+            else//else, create it!
+            {
+                using (var config = File.Create(stateFile))
+                {
+                    config.Close();
+                }
+            }
+
+            using (StreamWriter file = new StreamWriter(stateFile))
+            {
+                foreach (RowModel m in rowListing)
+                {
+                    file.WriteLine(m.FindString + "," + m.ReplaceString);
+                }
+            }
+        }
+
+        private void LoadState()
+        {
+            try
+            {
+                foreach (string line in File.ReadLines(stateFile))
+                {
+                    string[] vals = line.Split(',');
+                    rowListing.Add(new RowModel() { FindString = vals[0], ReplaceString = vals[1]});
+                }
+            }
+            catch (FileNotFoundException e)
+            {
+                MessageBox.Show(e.ToString());
+            }
         }
     }
 }
